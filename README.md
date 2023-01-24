@@ -52,6 +52,10 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
     * Serão enviadas notificações tanto para empresa quanto para o cliente nas ações de agendamento, cancelamento do agendamento e também para recados que a empresa queira passar para seus consumidores (promoções, mudança de horário de atendimento, etc)
 
 ---
+### Clonando o repositório
+* Ao clonar o repositório execute o comando `composer install` para instalar as dependencias do projeto.
+
+---
 © 2023 Moscão Company
 
 
