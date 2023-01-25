@@ -1,5 +1,7 @@
 # Sistema de agendamento
 ### Inicialmente o projeto irá funcionar para agendar horários em cabelereiros
+
+#### [Link do projeto no Trello](https://trello.com/b/GX7was5G/schedule-thing)
 ---
 ### Features atuais
 * Cadastro de cliente
