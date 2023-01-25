@@ -2,38 +2,38 @@
 
 namespace ScheduleThing\Validate;
 
-use stdClass;
-
 class CommomValidate {
-    /**
-     * Método retorna um array indicando os campos vazios
-     * to-do: adicionar array|bool ao tipo do $field após subir a versão do php para 8
-     */
-    public static function isEmptyFields($fields): array
+    public static function convertObjectToArray(object $value): array
     {
-        // TESTAR ESSA CONDIÇÃO
+        if (is_object($value)) {
+            return json_decode(json_encode($value), true);
+        }
+
+        return [];
+    }
+
+    public static function isEmptyFields(object|array|bool $fields): array
+    {
         if (!is_array($fields) && !is_object($fields)) {
             return false;
         }
 
         if (is_object($fields)) {
-            $fields = json_decode(json_encode($fields), true);
+            $fields = self::convertObjectToArray($fields);
         }
 
         $validatedFields = [];
 
-        foreach($fields as $field) {
-            // to-do: melhorar a condição
+        foreach($fields as $key => $field) {
             if (empty($field)) {
-                $validatedFields[$field] = true;
+                $validatedFields[$key] = true;
             }
         }
 
         return $validatedFields;
     }
 
-    // to-do: adicionar string|int|bool ao tipo do $field após subir a versão do php para 8
-    public static function isEmptyField($field): bool
+    public static function isEmptyField(string|int|bool $field): bool
     {
         if (empty($field)) {
             return true;

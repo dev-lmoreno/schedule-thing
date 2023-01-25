@@ -16,9 +16,9 @@ class ClientTest {
         );
 
         $clientController = new ClientController();
-        $clientController->create($clientModel);
+        $createClient = $clientController->create($clientModel);
 
-        if ($clientController) {
+        if ($createClient) {
             return true;
         }
 

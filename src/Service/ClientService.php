@@ -15,13 +15,13 @@ class ClientService {
 
     public function create($request_data): bool
     {
-        //Validações
         $validatedFields = CommomValidate::isEmptyFields($request_data);
 
-        // caso não esteja vazio (tenha valores) retornará false
         if (!empty($validatedFields)) {
             return false;
         }
+
+        $request_data = CommomValidate::convertObjectToArray($request_data);
 
         $create = $this->clientRepository->create($request_data);
 
