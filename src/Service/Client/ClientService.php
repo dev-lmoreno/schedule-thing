@@ -1,9 +1,9 @@
 <?php
 
-namespace ScheduleThing\Service;
+namespace ScheduleThing\Service\Client;
 
 use ScheduleThing\Validate\CommomValidate;
-use ScheduleThing\Repository\ClientRepository;
+use ScheduleThing\Repository\Client\ClientRepository;
 
 // tratar a regra de negócio e enviar para o repository
 class ClientService {

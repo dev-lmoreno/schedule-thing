@@ -1,8 +1,8 @@
 <?php
 
-namespace ScheduleThing\Controller;
+namespace ScheduleThing\Controller\Client;
 
-use ScheduleThing\Service\ClientService;
+use ScheduleThing\Service\Client\ClientService;
 
 // repassar para o service os dados
 class ClientController {

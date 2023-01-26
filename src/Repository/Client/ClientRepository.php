@@ -1,6 +1,6 @@
 <?php
 
-namespace ScheduleThing\Repository;
+namespace ScheduleThing\Repository\Client;
 
 // queries com o banco, aqui já recebemos o valor tratado, com todas validações já feitas
 class ClientRepository {

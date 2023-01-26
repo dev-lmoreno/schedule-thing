@@ -1,6 +1,6 @@
 <?php
 
-namespace ScheduleThing\Model;
+namespace ScheduleThing\Model\Client;
 
 // controle dos campos do banco de dados por entidade
 class ClientModel {

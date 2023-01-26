@@ -1,7 +1,9 @@
 <?php
 
-use ScheduleThing\Controller\ClientController;
-use ScheduleThing\Model\ClientModel;
+namespace ScheduleThing\Test\ClientTest;
+
+use ScheduleThing\Controller\Client\ClientController;
+use ScheduleThing\Model\Client\ClientModel;
 
 class ClientTest {
     public function createClientTest()
