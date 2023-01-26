@@ -20,14 +20,13 @@ class DbThing {
         $this->password = $_ENV['MYSQL_PASSWORD'];
     }
 
-    public function connection(): bool
+    public function connect()
     {
         try {
             $conn = new PDO("mysql:host=$this->host;port=$this->port;dbname=$this->database", $this->user, $this->password);
-
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            return true;
+            return $conn;
         } catch(PDOException $e) {
             print_r([
                 'log' => 'ERROR',
@@ -36,5 +35,13 @@ class DbThing {
 
             return false;
         }
+    }
+
+    public function fetchAll(string $query): array
+    {
+        $query = $this->connect()->query($query);
+        $rows = $query->fetchAll();
+
+        return $rows;
     }
 }

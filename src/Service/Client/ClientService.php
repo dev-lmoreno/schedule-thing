@@ -31,4 +31,10 @@ class ClientService {
 
         return false;
     }
+
+    public function findAll()
+    {
+        $findAll = $this->clientRepository->findAll();
+        return $findAll;
+    }
 }

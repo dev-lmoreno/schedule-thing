@@ -2,8 +2,16 @@
 
 namespace ScheduleThing\Repository\Client;
 
+use ScheduleThing\Database\DbThing;
+
 // queries com o banco, aqui já recebemos o valor tratado, com todas validações já feitas
 class ClientRepository {
+    public DbThing $db;
+
+    public function __construct() {
+        $this->db = new DbThing();
+    }
+
     public function create(array $request_data): bool
     {
         $firstName = $request_data['firstName'];
@@ -24,5 +32,14 @@ class ClientRepository {
         }
 
         return false;
+    }
+
+    public function findAll()
+    {
+        $query = 'SELECT * FROM NewTable';
+
+        $rows = $this->db->fetchAll($query);
+        
+        return $rows;
     }
 }

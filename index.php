@@ -11,7 +11,7 @@ $dotenv->safeLoad();
 echo "\n\nInício do sistema\n\n";
 
 // Início Teste conexão com o banco
-$connectionTest = (new ConnectionTest())->connection();
+$connectionTest = (new ConnectionTest())->connect();
 
 print_r([
     'log'        => 'connection',
@@ -28,3 +28,13 @@ print_r([
     'clientTest' => $createClientTest,
 ]);
 // Fim Teste cadastro cliente
+
+// Início Teste findAllClients
+$clientTest = new ClientTest();
+$findAllClientTest = $clientTest->findAllClientTest();
+
+print_r([
+    'log'        => 'findAllClientTest',
+    'findAllTest' => $findAllClientTest,
+]);
+// Fim Teste findAllClients

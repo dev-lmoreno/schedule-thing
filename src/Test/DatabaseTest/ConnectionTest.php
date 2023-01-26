@@ -5,10 +5,10 @@ namespace ScheduleThing\Test\DatabaseTest;
 use ScheduleThing\Database\DbThing;
 
 class ConnectionTest {
-    public function connection()
+    public function connect()
     {
         $db = new DbThing();
-        $connection = $db->connection();
+        $connection = $db->connect();
 
         if ($connection) {
             return [

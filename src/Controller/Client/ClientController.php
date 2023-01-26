@@ -14,7 +14,11 @@ class ClientController {
 
     public function findOne() {}
 
-    public function findAll() {}
+    public function findAll()
+    {
+        $findAll = $this->clientService->findAll();
+        return $findAll;
+    }
 
     public function create($request_data)
     {

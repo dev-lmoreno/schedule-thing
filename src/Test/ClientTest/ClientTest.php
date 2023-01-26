@@ -26,4 +26,16 @@ class ClientTest {
 
         return false;
     }
+
+    public function findAllClientTest()
+    {
+        $clientController = new ClientController();
+        $findAllClient = $clientController->findAll();
+
+        if ($findAllClient) {
+            return $findAllClient;
+        }
+
+        return [];
+    }
 }
