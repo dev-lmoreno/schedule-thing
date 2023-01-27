@@ -49,46 +49,4 @@ class CommomValidate {
 
         return false;
     }
-
-    /**
-     * to-do: entender a lógica da validação de cnpj
-     */
-    public static function isValidCnpj(string $cnpj): bool
-    {
-        $cnpj = preg_replace( '/[^0-9]/is', '', $cnpj );
-
-        if (strlen($cnpj) != 14)
-            return false;
-
-        // Verifica se todos os digitos são iguais
-        if (preg_match('/(\d)\1{13}/', $cnpj))
-            return false;
-
-        // Valida primeiro dígito verificador
-        for ($i = 0, $j = 5, $count = 0; $i < 12; $i++) {
-            $count += $cnpj[$i] * $j;
-            $j = ($j == 2) ? 9 : $j - 1;
-        }
-
-        $remainder = $count % 11;
-
-        if ($cnpj[12] != ($remainder < 2 ? 0 : 11 - $remainder)) {
-            return false;
-        }
-
-        for ($i = 0, $j = 6, $count = 0; $i < 13; $i++) {
-            $count += $cnpj[$i] * $j;
-            $j = ($j == 2) ? 9 : $j - 1;
-        }
-
-        $remainder = $count % 11;
-
-        $isValidCnpj = $cnpj[13] == ($remainder < 2 ? 0 : 11 - $remainder);
-
-        if ($isValidCnpj) {
-            return true;
-        }
-
-        return false;
-    }
 }

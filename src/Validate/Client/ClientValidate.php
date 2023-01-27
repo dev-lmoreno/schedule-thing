@@ -58,7 +58,7 @@ class ClientValidate {
 
         if (!self::calculateValidCpf($cpf)) {
             return false;
-        };
+        }
 
         return true;
     }
