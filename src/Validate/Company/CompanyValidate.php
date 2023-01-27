@@ -2,8 +2,6 @@
 
 namespace ScheduleThing\Validate\Company;
 
-use ScheduleThing\Validate\CommomValidate;
-
 class CompanyValidate {
     private static function calculateValidCpf(string $cnpj): bool
     {
