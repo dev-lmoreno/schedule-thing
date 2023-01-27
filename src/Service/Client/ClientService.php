@@ -3,6 +3,7 @@
 namespace ScheduleThing\Service\Client;
 
 use ScheduleThing\Validate\CommomValidate;
+use ScheduleThing\Validate\Client\ClientValidate;
 use ScheduleThing\Repository\Client\ClientRepository;
 
 // tratar a regra de negócio e enviar para o repository
@@ -15,13 +16,25 @@ class ClientService {
 
     public function create($request_data): bool
     {
-        $validatedFields = CommomValidate::isEmptyFields($request_data);
+        $request_data = CommomValidate::convertObjectToArray($request_data);
 
-        if (!empty($validatedFields)) {
+        $isEmptyFields = CommomValidate::isEmptyFields($request_data);
+
+        if (!empty($isEmptyFields)) {
             return false;
         }
 
-        $request_data = CommomValidate::convertObjectToArray($request_data);
+        $isValidEmail = CommomValidate::isValidEmail($request_data['email']);
+
+        if ($isValidEmail === false) {
+            return false;
+        }
+
+        $isValidCpf = ClientValidate::isValidCpf($request_data['cpf']);
+
+        if ($isValidCpf === false) {
+            return false;
+        }
 
         $create = $this->clientRepository->create($request_data);
 

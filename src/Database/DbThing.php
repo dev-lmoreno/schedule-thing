@@ -20,7 +20,7 @@ class DbThing {
         $this->password = $_ENV['MYSQL_PASSWORD'];
     }
 
-    public function connect()
+    public function connect(): PDO|bool
     {
         try {
             $conn = new PDO("mysql:host=$this->host;port=$this->port;dbname=$this->database", $this->user, $this->password);
