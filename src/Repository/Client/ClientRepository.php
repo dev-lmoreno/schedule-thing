@@ -14,12 +14,15 @@ class ClientRepository {
 
     public function create(array $request_data): bool
     {
-        $firstName = $request_data['firstName'];
-        $lastName =  $request_data['lastName'];
-        $email =     $request_data['email'];
-        $cpf =       $request_data['cpf'];
-        $username =  $request_data['username'];
-        $password =  $request_data['password'];
+        $id          = $request_data['id'];
+        $firstName   = $request_data['firstName'];
+        $lastName    = $request_data['lastName'];
+        $email       = $request_data['email'];
+        $cpf         = $request_data['cpf'];
+        $username    = $request_data['username'];
+        $password    = $request_data['password'];
+        $dateCreated = $request_data['dateCreated'];
+        $dateUpdated = $request_data['dateUpdated'];
 
         $insert = "
             INSERT INTO Clients (firstName, lastName, email, cpf , username, password)

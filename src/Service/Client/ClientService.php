@@ -36,6 +36,8 @@ class ClientService {
             return false;
         }
 
+        // to-do: validar data
+
         $create = $this->clientRepository->create($request_data);
 
         if ($create) {

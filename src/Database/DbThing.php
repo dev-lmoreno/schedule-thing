@@ -44,4 +44,9 @@ class DbThing {
 
         return $rows;
     }
+
+    public function nextId()
+    {
+        // pegar o próximo id da tabela
+    }
 }

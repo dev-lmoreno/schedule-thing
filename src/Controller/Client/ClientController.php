@@ -20,7 +20,7 @@ class ClientController {
         return $findAll;
     }
 
-    public function create($request_data)
+    public function create(object $request_data)
     {
         $create = $this->clientService->create($request_data);
         return $create;
