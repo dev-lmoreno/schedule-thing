@@ -3,9 +3,47 @@
 namespace ScheduleThing\Validate\Client;
 
 class ClientValidate {
-    /**
-     * to-do: entender a lógica da validação de cpf
-     */
+    private static function calculateValidCpf(string $cpf): bool
+    {
+        $firstVerifiedDigit = $secondVerifiedDigit = 0;
+
+        $firstNineDigits = substr($cpf, 0, 9);
+
+        $countFirst = 0;
+        $multiplierFirst = 10;
+        for ($i = 0; $i < 9; $i++) {
+            $countFirst += $firstNineDigits[$i] * $multiplierFirst--;
+        }
+
+        $remainder = $countFirst % 11;
+
+        if ($remainder >= 2) {
+            $firstVerifiedDigit = 11 - $remainder;
+        }
+
+        $cpfWithFirstDigit = $firstNineDigits . $firstVerifiedDigit;
+
+        $countSecond = 0;
+        $multiplierSecond = 11;
+        for ($i = 0; $i < 10; $i++) {
+            $countSecond += $cpfWithFirstDigit[$i] * $multiplierSecond--;
+        }
+
+        $remainder = $countSecond % 11;
+
+        if ($remainder >= 2) {
+            $secondVerifiedDigit = 11 - $remainder;
+        }
+
+        $cpfValid = $cpfWithFirstDigit . $secondVerifiedDigit;
+
+        if ((string) $cpfValid === $cpf) {
+            return true;
+        }
+
+        return false;
+    }
+
     public static function isValidCpf(string $cpf): bool
     {
         $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
@@ -18,17 +56,9 @@ class ClientValidate {
             return false;
         }
 
-        for ($t = 9; $t < 11; $t++) {
-            for ($d = 0, $c = 0; $c < $t; $c++) {
-                $d += $cpf[$c] * (($t + 1) - $c);
-            }
-
-            $d = ((10 * $d) % 11) % 10;
-
-            if ($cpf[$c] != $d) {
-                return false;
-            }
-        }
+        if (!self::calculateValidCpf($cpf)) {
+            return false;
+        };
 
         return true;
     }
