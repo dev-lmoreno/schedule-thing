@@ -15,44 +15,81 @@ class ClientTest {
         $this->db = new DbThing();
     }
 
+    private function prepareDublesClients(): array
+    {
+        $clientsDubles = [
+            new ClientModel(
+                null,
+                'Lucas',
+                'Moreno',
+                'devlmoreno007@gmail.com',
+                '82825535060',
+                'lmoreno',
+                'teste123',
+                new DateTime(),
+                new DateTime(),
+            ),
+            new ClientModel(
+                null,
+                'Lukita',
+                'Moreno',
+                'lucasacm007@gmail.com',
+                '47413606011',
+                'lukita',
+                'teste123',
+                new DateTime(),
+                new DateTime(),
+            ),
+            new ClientModel(
+                null,
+                'John',
+                'Doe',
+                'johndoe@example.com',
+                '524.749.900-03',
+                'johndoe',
+                'password123',
+                new DateTime(),
+                new DateTime(),
+            ),
+            new ClientModel(
+                null,
+                'Jane',
+                'Smith',
+                'janesmith@example.com',
+                '38990938015',
+                'janesmith',
+                'password456',
+                new DateTime(),
+                new DateTime(),
+            ),
+            new ClientModel(
+                null,
+                'Bob',
+                'Johnson',
+                'bobjohnson@example.com',
+                '985.629.900-43',
+                'bobjohnson',
+                'password789',
+                new DateTime(),
+                new DateTime(),
+            ),
+        ];
+
+        return $clientsDubles;
+    }
+
     public function createClientTest(): array
     {
         $clientController = new ClientController();
 
-        $clientModelFirst = new ClientModel(
-            $this->db->nextId(ClientsConstants::TABLE_NAME, ClientsConstants::COLUMN_ID),
-            'Lucas',
-            'Moreno',
-            'devlmoreno007@gmail.com',
-            '82825535060',
-            'lmoreno',
-            'teste123',
-            new DateTime(),
-            new DateTime(),
-        );
+        $dublesClients = self::prepareDublesClients();
 
-        $createClientFirst = $clientController->create($clientModelFirst);
+        $createDubleClient = [];
+        foreach($dublesClients as $dubleClient) {
+            $createDubleClient[] = $clientController->create($dubleClient);
+        }
 
-        $clientModelSecond = new ClientModel(
-            $this->db->nextId(ClientsConstants::TABLE_NAME, ClientsConstants::COLUMN_ID),
-            'Lukita',
-            'Moreno',
-            'lucasacm007@gmail.com',
-            '47413606011',
-            'lukita',
-            'teste123',
-            new DateTime(),
-            new DateTime(),
-        );
-
-        $createClientSecond = $clientController->create($clientModelSecond);
-
-        $return = [
-            'createClientFirst' => $createClientFirst,
-            'createClientSecond' => $createClientSecond
-        ];
-
-        return $return;
+        return $createDubleClient;
     }
 
     public function findAllClientTest()

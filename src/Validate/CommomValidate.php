@@ -23,7 +23,7 @@ class CommomValidate {
         $validatedFields = [];
 
         foreach($fields as $key => $field) {
-            if (empty($field)) {
+            if (empty($field) && $key !== 'id') {
                 $validatedFields[$key] = true;
             }
         }

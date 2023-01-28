@@ -5,7 +5,7 @@ namespace ScheduleThing\Model\Client;
 use DateTime;
 
 class ClientModel {
-    public int $id;
+    public ?int $id;
     public string $firstName;
     public string $lastName;
     public string $email;
@@ -16,7 +16,7 @@ class ClientModel {
     public DateTime $dateUpdated;
 
     public function __construct(
-        int $id,
+        ?int $id,
         string $firstName,
         string $lastName,
         string $email,
