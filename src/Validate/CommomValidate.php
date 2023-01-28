@@ -2,6 +2,8 @@
 
 namespace ScheduleThing\Validate;
 
+use DateTime;
+
 class CommomValidate {
     public static function convertObjectToArray(object $value): array
     {
@@ -48,5 +50,10 @@ class CommomValidate {
         }
 
         return false;
+    }
+
+    public static function getPropertyDate($date): string
+    {
+        return $date['date'];
     }
 }

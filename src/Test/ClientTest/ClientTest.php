@@ -5,30 +5,54 @@ namespace ScheduleThing\Test\ClientTest;
 use DateTime;
 use ScheduleThing\Controller\Client\ClientController;
 use ScheduleThing\Model\Client\ClientModel;
+use ScheduleThing\Database\DbThing;
+use ScheduleThing\Constants\Clients\ClientsConstants;
 
 class ClientTest {
-    public function createClientTest()
+    private DbThing $db;
+
+    public function __construct() {
+        $this->db = new DbThing();
+    }
+
+    public function createClientTest(): array
     {
-        $clientModel = new ClientModel(
-            1,
+        $clientController = new ClientController();
+
+        $clientModelFirst = new ClientModel(
+            $this->db->nextId(ClientsConstants::TABLE_NAME, ClientsConstants::COLUMN_ID),
             'Lucas',
             'Moreno',
             'devlmoreno007@gmail.com',
-            '39860026858',
+            '82825535060',
             'lmoreno',
             'teste123',
             new DateTime(),
             new DateTime(),
         );
 
-        $clientController = new ClientController();
-        $createClient = $clientController->create($clientModel);
+        $createClientFirst = $clientController->create($clientModelFirst);
 
-        if ($createClient) {
-            return true;
-        }
+        $clientModelSecond = new ClientModel(
+            $this->db->nextId(ClientsConstants::TABLE_NAME, ClientsConstants::COLUMN_ID),
+            'Lukita',
+            'Moreno',
+            'lucasacm007@gmail.com',
+            '47413606011',
+            'lukita',
+            'teste123',
+            new DateTime(),
+            new DateTime(),
+        );
 
-        return false;
+        $createClientSecond = $clientController->create($clientModelSecond);
+
+        $return = [
+            'createClientFirst' => $createClientFirst,
+            'createClientSecond' => $createClientSecond
+        ];
+
+        return $return;
     }
 
     public function findAllClientTest()

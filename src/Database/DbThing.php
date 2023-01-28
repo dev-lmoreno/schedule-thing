@@ -4,6 +4,7 @@ namespace ScheduleThing\Database;
 
 use PDO;
 use PDOException;
+use Exception;
 
 class DbThing {
     public string $host;
@@ -39,14 +40,39 @@ class DbThing {
 
     public function fetchAll(string $query): array
     {
-        $query = $this->connect()->query($query);
-        $rows = $query->fetchAll();
+        $sql = $this->connect()->query($query);
+        $rows = $sql->fetchAll();
 
         return $rows;
     }
 
-    public function nextId()
+    public function insert(string $query, array $values): array
     {
-        // pegar o próximo id da tabela
+        try {
+            $sql = $this->connect()->prepare($query);
+            $row = $sql->execute($values);
+
+            return [
+                'success' => $row,
+            ];
+        } catch (Exception $e) {
+            return [
+                'log' => 'Error to insert data',
+                'success' => false,
+                'msg' => $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * Id increment is done by 2 by 2
+     */
+    public function nextId(string $table, string $columnId): int
+    {
+        $query = sprintf('SELECT MAX(%s) FROM %s', $columnId, $table);
+        $sql = $this->connect()->query($query);
+        $row = $sql->fetch();
+
+        return $row[0] + 2;
     }
 }

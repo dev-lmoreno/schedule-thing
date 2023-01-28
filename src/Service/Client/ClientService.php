@@ -14,7 +14,7 @@ class ClientService {
         $this->clientRepository = new ClientRepository();
     }
 
-    public function create($request_data): bool
+    public function create($request_data): array
     {
         $request_data = CommomValidate::convertObjectToArray($request_data);
 
@@ -36,15 +36,15 @@ class ClientService {
             return false;
         }
 
-        // to-do: validar data
-
-        $create = $this->clientRepository->create($request_data);
-
-        if ($create) {
-            return true;
+        if ($request_data['dateCreated']) {
+            $request_data['dateCreated'] = CommomValidate::getPropertyDate($request_data['dateCreated']);
         }
 
-        return false;
+        if ($request_data['dateUpdated']) {
+            $request_data['dateUpdated'] = CommomValidate::getPropertyDate($request_data['dateUpdated']);
+        }
+
+        return $this->clientRepository->create($request_data);
     }
 
     public function findAll()

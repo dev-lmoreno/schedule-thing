@@ -3,8 +3,8 @@
 namespace ScheduleThing\Repository\Client;
 
 use ScheduleThing\Database\DbThing;
+use ScheduleThing\Constants\Clients\ClientsConstants;
 
-// queries com o banco, aqui já recebemos o valor tratado, com todas validações já feitas
 class ClientRepository {
     public DbThing $db;
 
@@ -12,35 +12,33 @@ class ClientRepository {
         $this->db = new DbThing();
     }
 
-    public function create(array $request_data): bool
+    public function create(array $request_data): array
     {
-        $id          = $request_data['id'];
-        $firstName   = $request_data['firstName'];
-        $lastName    = $request_data['lastName'];
-        $email       = $request_data['email'];
-        $cpf         = $request_data['cpf'];
-        $username    = $request_data['username'];
-        $password    = $request_data['password'];
-        $dateCreated = $request_data['dateCreated'];
-        $dateUpdated = $request_data['dateUpdated'];
+        $values = [
+            'id'          => $request_data['id']  ?: $this->db->nextId(ClientsConstants::TABLE_NAME, ClientsConstants::COLUMN_ID),
+            'firstName'   => $request_data['firstName'],
+            'lastName'    => $request_data['lastName'],
+            'email'       => $request_data['email'],
+            'cpf'         => $request_data['cpf'],
+            'username'    => $request_data['username'],
+            'password'    => $request_data['password'],
+            'dateCreated' => $request_data['dateCreated'],
+            'dateUpdated' => $request_data['dateUpdated'],
+        ];
 
-        $insert = "
-            INSERT INTO Clients (firstName, lastName, email, cpf , username, password)
-            VALUES (`$firstName`, `$lastName`, `$email`, `$cpf` , `$username`, `$password`)
-        ";
+        $query = sprintf("
+            INSERT INTO %s
+                (%s, client_firstName, client_lastName, client_email, client_cpf , client_username, client_password, date_created, date_updated)
+            VALUES
+                (:id, :firstName, :lastName, :email, :cpf , :username, md5(:password), :dateCreated, :dateUpdated)
+        ", ClientsConstants::TABLE_NAME, ClientsConstants::COLUMN_ID);
 
-        // simulando insert no banco com sucesso
-        if ($insert) {
-            return true;
-        }
-
-        return false;
+        return $this->db->insert($query, $values);
     }
 
     public function findAll()
     {
-        $query = 'SELECT * FROM NewTable';
-
+        $query = sprintf("SELECT * FROM %s", ClientsConstants::TABLE_NAME);
         $rows = $this->db->fetchAll($query);
         
         return $rows;
