@@ -4,7 +4,6 @@ require_once 'vendor/autoload.php';
 
 use ScheduleThing\API\Http\Router;
 use ScheduleThing\Test\SystemTest;
-use ScheduleThing\API\Routes\Client\ClientRoutes;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
@@ -15,6 +14,7 @@ $dotenv->safeLoad();
 $testMode = $argv[0] ?? false;
 if ($testMode) {
     $systemTest = (new SystemTest())->execute();
+    die();
 }
 
 // DEFINE A CONSTANTE DA URL
