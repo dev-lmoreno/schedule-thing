@@ -3,6 +3,11 @@
 namespace ScheduleThing\Validate\Client;
 
 class ClientValidate {
+    public static function removeCharactersfromCpf(string $cpf): string
+    {
+        return preg_replace( '/[^0-9]/is', '', $cpf );
+    }
+
     private static function calculateValidCpf(string $cpf): bool
     {
         $firstVerifiedDigit = $secondVerifiedDigit = 0;
@@ -46,7 +51,7 @@ class ClientValidate {
 
     public static function isValidCpf(string $cpf): bool
     {
-        $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+        $cpf = self::removeCharactersfromCpf($cpf);
 
         if (strlen($cpf) != 11) {
             return false;

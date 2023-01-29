@@ -2,6 +2,7 @@
 
 namespace ScheduleThing\Service\Client;
 
+use DateTime;
 use ScheduleThing\Validate\CommomValidate;
 use ScheduleThing\Validate\Client\ClientValidate;
 use ScheduleThing\Repository\Client\ClientRepository;
@@ -15,7 +16,9 @@ class ClientService {
 
     public function create($request_data): array
     {
-        $request_data = CommomValidate::convertObjectToArray($request_data);
+        if (is_object($request_data)) {
+            $request_data = CommomValidate::convertObjectToArray($request_data);
+        }
 
         $isEmptyFields = CommomValidate::isEmptyFields($request_data);
 
@@ -47,13 +50,17 @@ class ClientService {
             ];
         }
 
-        if ($request_data['dateCreated']) {
-            $request_data['dateCreated'] = CommomValidate::getPropertyDate($request_data['dateCreated']);
+        if (empty($request_data['dateCreated'])) {
+            $request_data['dateCreated'] = new DateTime();
         }
 
-        if ($request_data['dateUpdated']) {
-            $request_data['dateUpdated'] = CommomValidate::getPropertyDate($request_data['dateUpdated']);
+        if (empty($request_data['dateUpdated'])) {
+            $request_data['dateUpdated'] = new DateTime();
         }
+
+        $request_data['cpf'] = ClientValidate::removeCharactersfromCpf($request_data['cpf']);
+        $request_data['dateCreated'] = CommomValidate::getPropertyDate($request_data['dateCreated']);
+        $request_data['dateUpdated'] = CommomValidate::getPropertyDate($request_data['dateUpdated']);
 
         return $this->clientRepository->create($request_data);
     }

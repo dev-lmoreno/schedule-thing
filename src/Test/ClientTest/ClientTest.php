@@ -5,16 +5,8 @@ namespace ScheduleThing\Test\ClientTest;
 use DateTime;
 use ScheduleThing\Controller\Client\ClientController;
 use ScheduleThing\Model\Client\ClientModel;
-use ScheduleThing\Database\DbThing;
-use ScheduleThing\Constants\Clients\ClientsConstants;
 
 class ClientTest {
-    private DbThing $db;
-
-    public function __construct() {
-        $this->db = new DbThing();
-    }
-
     private function prepareDublesClients(): array
     {
         $clientsDubles = [
