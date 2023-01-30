@@ -69,7 +69,8 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
 
 ---
 ### <a name="configurando-projeto">Configurando o projeto</a>
-* to-do: disponibilizar script de criação de tabela e adicionar os valores nas .envs
+* Para que o projeto seja executando normalmente é preciso criar uma tabela chamada Clients, basta acessar o diretório `SqlScripts` e copiar o conteúdo do arquivo `Clients.sql` e executar no banco de dados.
+* Também é necessário configurar as variáveis de ambiente disponibilziadas no arquivo .env.example
 ---
 ### <a name="rotas">Rotas disponíveis</a>
 * Exemplo da chamada para API: `{url}/{prefix}/{resource}`
