@@ -65,16 +65,16 @@ class Request {
 
         switch ($this->getHttpMethod()) {
             case MethodsConstants::GET:
-                $controller->findOne();
+                $response = $controller->findOne();
                 break;
             case MethodsConstants::POST:
-                $controller->create($request_data);
+                $response = $controller->create($request_data);
                 break;
             case MethodsConstants::PUT:
-                $controller->update();
+                $response = $controller->update();
                 break;
             case MethodsConstants::DELETE:
-                $controller->delete();
+                $response = $controller->delete();
                 break;
         }
 

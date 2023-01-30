@@ -2,9 +2,23 @@
 
 namespace ScheduleThing\Validate;
 
-use DateTime;
+use ScheduleThing\Constants\Http\StatusCodeConstants;
 
 class CommomValidate {
+    public static function formatResponse(
+        bool $success = true,
+        int $statusCode = StatusCodeConstants::OK,
+        string $msg = '',
+        mixed $data
+    ): array {
+        return [
+            'success' => $success,
+            'statusCode' => $statusCode,
+            'msg' => $msg,
+            'data' => $data,
+        ];
+    }
+
     public static function convertObjectToArray(object $value): array
     {
         if (is_object($value)) {

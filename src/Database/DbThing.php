@@ -50,10 +50,10 @@ class DbThing {
     {
         try {
             $sql = $this->connect()->prepare($query);
-            $row = $sql->execute($values);
+            $sql->execute($values);
 
             return [
-                'success' => $row,
+                'success' => true,
             ];
         } catch (Exception $e) {
             return [

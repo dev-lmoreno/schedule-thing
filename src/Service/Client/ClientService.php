@@ -3,6 +3,7 @@
 namespace ScheduleThing\Service\Client;
 
 use DateTime;
+use ScheduleThing\Constants\Http\StatusCodeConstants;
 use ScheduleThing\Validate\CommomValidate;
 use ScheduleThing\Validate\Client\ClientValidate;
 use ScheduleThing\Repository\Client\ClientRepository;
@@ -23,31 +24,34 @@ class ClientService {
         $isEmptyFields = CommomValidate::isEmptyFields($request_data);
 
         if (!empty($isEmptyFields)) {
-            return [
-                'success' => false,
-                'msg' => 'Empty Fields',
-                'log' => $isEmptyFields
-            ];
+            return CommomValidate::formatResponse(
+                false,
+                StatusCodeConstants::INTERNAL_SERVER_ERROR,
+                'Empty Fields',
+                $isEmptyFields
+            );
         }
 
         $isValidEmail = CommomValidate::isValidEmail($request_data['email']);
 
         if ($isValidEmail === false) {
-            return [
-                'success' => false,
-                'msg' => 'Invalid Email',
-                'log' => $isValidEmail
-            ];
+            return CommomValidate::formatResponse(
+                false,
+                StatusCodeConstants::INTERNAL_SERVER_ERROR,
+                'Invalid Email',
+                $isValidEmail
+            );
         }
 
         $isValidCpf = ClientValidate::isValidCpf($request_data['cpf']);
 
         if ($isValidCpf === false) {
-            return [
-                'success' => false,
-                'msg' => 'Invalid CPF',
-                'log' => $isValidCpf
-            ];
+            return CommomValidate::formatResponse(
+                false,
+                StatusCodeConstants::INTERNAL_SERVER_ERROR,
+                'Invalid CPF',
+                $isValidCpf
+            );
         }
 
         if (empty($request_data['dateCreated'])) {
@@ -62,7 +66,23 @@ class ClientService {
         $request_data['dateCreated'] = CommomValidate::getPropertyDate($request_data['dateCreated']);
         $request_data['dateUpdated'] = CommomValidate::getPropertyDate($request_data['dateUpdated']);
 
-        return $this->clientRepository->create($request_data);
+        $create = $this->clientRepository->create($request_data);
+
+        if ($create['success']) {
+            return CommomValidate::formatResponse(
+                true,
+                StatusCodeConstants::OK,
+                'Client inserted successfully',
+                $request_data
+            );
+        }
+
+        return CommomValidate::formatResponse(
+            false,
+            StatusCodeConstants::INTERNAL_SERVER_ERROR,
+            $create['msg'],
+            $request_data
+        );
     }
 
     public function findAll()

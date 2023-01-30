@@ -3,7 +3,6 @@
 namespace ScheduleThing\API\Http;
 
 use ScheduleThing\API\Routes\Endpoints;
-use ScheduleThing\Controller\Client\ClientController;
 use ScheduleThing\Controller\DefaultController;
 
 class Router {
@@ -55,7 +54,7 @@ class Router {
         return $this->resource;
     }
 
-    public function run()
+    public function run(): bool
     {
         $endpointExist = (new Endpoints())->validateExistEndpoint($this->prefix, $this->resource);
         if (!$endpointExist) {
@@ -66,6 +65,17 @@ class Router {
 
         $request_data = $this->request->getRequestData();
 
-        $this->request->sendRequest($controller, $request_data);
+        $returnRequest = $this->request->sendRequest($controller, $request_data);
+
+        $response = (new Response(
+            $returnRequest['success'],
+            $returnRequest['statusCode'],
+            $returnRequest['msg'],
+            $returnRequest['data']
+        ))->sendResponse();
+
+        echo $response;
+
+        return true;
     }
 }

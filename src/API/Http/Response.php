@@ -2,66 +2,62 @@
 
 namespace ScheduleThing\API\Http;
 
+use ScheduleThing\Constants\Http\StatusCodeConstants;
+use ScheduleThing\Validate\CommomValidate;
+
 class Response {
-
-    private int $httpCode = 200;
-    private array $headers = [];
+    private bool   $success = true;
+    private int    $statusCode = StatusCodeConstants::OK;
+    private string $msg = '';
+    private mixed  $data;
     private string $contentType = 'application/json';
-    private mixed $content;
+    private array  $headers = [];
 
-    public function __construct(int $httpCode, mixed $content, string $contentType = 'application/json')
+    public function __construct(
+        bool $success,
+        int $statusCode,
+        string $msg,
+        mixed $data,
+        string $contentType = 'application/json')
     {
-        $this->httpCode = $httpCode;
-        $this->content  = $content;
+        $this->success = $success;
+        $this->statusCode = $statusCode;
+        $this->msg = $msg;
+        $this->data  = $data;
         $this->setContentType($contentType);
     }
 
-    /**
-     * Método responsável por alterar o content type do response
-     * @param string $contentType
-     */
     public function setContentType(string $contentType): void
     {
         $this->contentType = $contentType;
         $this->addHeader('Content-Type', $contentType);
     }
 
-    /**
-     * Método responsável por adicionar um registro no cabeçalho de response
-     * @param string $key
-     * @param string $value
-     */
-    public function addHeader($key, $value): void
+    public function addHeader(string $key, string $value): void
     {
         $this->headers[$key] = $value;
     }
 
-    /**
-     * Método responsável por enviar os headers para o navegador
-     */
     private function sendHeaders(): void
     {
-        // DEFINIR OS STATUS
-        http_response_code($this->httpCode);
+        http_response_code($this->statusCode);
 
-        // ENVIAR HEADERS
         foreach ($this->headers as $key => $value) {
             header($key . ': ' . $value);
         }
     }
 
-    /**
-     * Método responsável por enviar a resposta para o usuário
-     */
-    public function sendResponse(): void
+    public function sendResponse(): string|bool
     {
-        // ENVIA OS HEADERS
         $this->sendHeaders();
 
-        // DEFINE O CONTEÚDO
-        switch ($this->contentType) {
-            case 'application/json':
-                exit;
-        }
+        $response = CommomValidate::formatResponse(
+            $this->success,
+            $this->statusCode,
+            $this->msg,
+            $this->data
+        );
+
+        return json_encode($response);
     }
 }
