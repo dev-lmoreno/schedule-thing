@@ -4,6 +4,7 @@ namespace ScheduleThing\API\Http;
 
 use ScheduleThing\API\Routes\Endpoints;
 use ScheduleThing\Controller\Client\ClientController;
+use ScheduleThing\Controller\DefaultController;
 
 class Router {
     private string $url = '';
@@ -56,30 +57,15 @@ class Router {
 
     public function run()
     {
-        $instanceEndpoint = new Endpoints();
-        $isValidEndpoint = $instanceEndpoint->validateExistEndpoint($this->prefix, $this->resource);
-        if (!$isValidEndpoint) {
+        $endpointExist = (new Endpoints())->validateExistEndpoint($this->prefix, $this->resource);
+        if (!$endpointExist) {
             return false;
         }
 
-        if ($this->prefix === 'clients') {
-            $clientController = new ClientController();
-            $request_data = $this->request->getRequestData();
+        $controller = (new DefaultController())->redirect($this->prefix);
 
-            switch ($this->request->getHttpMethod()) {
-                case 'GET':
-                    $clientController->findOne();
-                    break;
-                case 'POST':
-                    $clientController->create($request_data);
-                    break;
-                case 'PUT':
-                    $clientController->update();
-                    break;
-                case 'DELETE':
-                    $clientController->delete();
-                    break;
-            }
-        }
+        $request_data = $this->request->getRequestData();
+
+        $this->request->sendRequest($controller, $request_data);
     }
 }

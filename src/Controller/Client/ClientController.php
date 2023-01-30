@@ -4,7 +4,6 @@ namespace ScheduleThing\Controller\Client;
 
 use ScheduleThing\Service\Client\ClientService;
 
-// repassar para o service os dados
 class ClientController {
     public ClientService $clientService;
 
