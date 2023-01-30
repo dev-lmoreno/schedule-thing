@@ -9,7 +9,6 @@ class Request {
     private string $uri;
     private array  $queryParams = [];
     private array  $postVars = [];
-    private array  $request_data;
     private array  $headers = [];
 
     public function __construct()
@@ -17,7 +16,6 @@ class Request {
         $this->setHeaders();
         $this->queryParams  = $_GET ?? [];
         $this->postVars     = $_POST ?? [];
-        $this->request_data = json_decode(file_get_contents('php://input'), true);
         $this->headers      = getallheaders();
         $this->httpMethod   = $_SERVER['REQUEST_METHOD'] ?? '';
         $this->uri          = $_SERVER['REQUEST_URI'] ?? '';
@@ -54,18 +52,19 @@ class Request {
         return $this->postVars;
     }
 
-    public function getRequestData(): array
+    private function getRequestData(): ?array
     {
-        return $this->request_data;
+        return json_decode(file_get_contents('php://input'), true);
     }
 
-    public function sendRequest(object $controller, array $request_data): array
+    public function sendRequest(object $controller): array
     {
         $response = [];
+        $request_data = self::getRequestData();
 
         switch ($this->getHttpMethod()) {
             case MethodsConstants::GET:
-                $response = $controller->findOne();
+                $response = $controller->findAll();
                 break;
             case MethodsConstants::POST:
                 $response = $controller->create($request_data);

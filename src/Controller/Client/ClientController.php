@@ -13,7 +13,7 @@ class ClientController {
 
     public function findOne() {}
 
-    public function findAll()
+    public function findAll(): array
     {
         $findAll = $this->clientService->findAll();
         return $findAll;

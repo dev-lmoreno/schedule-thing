@@ -63,9 +63,9 @@ class Router {
 
         $controller = (new DefaultController())->redirect($this->prefix);
 
-        $request_data = $this->request->getRequestData();
+        //$request_data = $this->request->getRequestData();
 
-        $returnRequest = $this->request->sendRequest($controller, $request_data);
+        $returnRequest = $this->request->sendRequest($controller);
 
         $response = (new Response(
             $returnRequest['success'],

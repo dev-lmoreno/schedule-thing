@@ -7,6 +7,12 @@ use ScheduleThing\Controller\Client\ClientController;
 use ScheduleThing\Model\Client\ClientModel;
 
 class ClientTest {
+    private ClientController $clientController;
+
+    public function __construct() {
+        $this->clientController = new ClientController();
+    }
+
     private function prepareDublesClients(): array
     {
         $clientsDubles = [
@@ -72,27 +78,19 @@ class ClientTest {
 
     public function createClientTest(): array
     {
-        $clientController = new ClientController();
-
         $dublesClients = self::prepareDublesClients();
 
         $createDubleClient = [];
         foreach($dublesClients as $dubleClient) {
-            $createDubleClient[] = $clientController->create($dubleClient);
+            $createDubleClient[] = $this->clientController->create($dubleClient);
         }
 
         return $createDubleClient;
     }
 
-    public function findAllClientTest()
+    public function findAllClientTest(): array
     {
-        $clientController = new ClientController();
-        $findAllClient = $clientController->findAll();
-
-        if ($findAllClient) {
-            return $findAllClient;
-        }
-
-        return [];
+        $findAllClient = $this->clientController->findAll();
+        return $findAllClient;
     }
 }

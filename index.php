@@ -8,10 +8,16 @@ use ScheduleThing\Test\SystemTest;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-$testMode = $argv[0] ?? false;
-if ($testMode) {
-    $systemTest = (new SystemTest())->execute();
-    die();
+$acceptedTestAction = ['create', 'findAll'];
+
+$testMode   = $argv[1] ? 'test' : '';
+$testAction = $argv[2];
+
+if ($testMode === 'test') {
+    if (in_array($testAction, $acceptedTestAction)) {
+        $systemTest = (new SystemTest())->execute($testAction);
+        die();
+    }
 }
 
 define('URL', $_ENV['BASE_URL']);

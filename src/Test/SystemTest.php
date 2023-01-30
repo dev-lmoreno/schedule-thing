@@ -14,16 +14,21 @@ class SystemTest {
         $this->connectionTest = new ConnectionTest();
     }
 
-    public function execute(): void
+    public function execute(string $testAction = ''): void
     {
         $connectionTest = $this->connectionTest->connect();
         $this->logExecution('connection', $connectionTest);
 
-        $createClientTest = $this->clientTest->createClientTest();
-        $this->logExecution('createClientTest', $createClientTest);
-
-        $findAllClientTest = $this->clientTest->findAllClientTest();
-        $this->logExecution('findAllClientTest', $findAllClientTest);
+        switch ($testAction) {
+            case 'create':
+                $createClientTest = $this->clientTest->createClientTest();
+                $this->logExecution('createClientTest', $createClientTest);
+                break;
+            case 'findAll':
+                $findAllClientTest = $this->clientTest->findAllClientTest();
+                $this->logExecution('findAllClientTest', $findAllClientTest);
+                break;
+        }
     }
 
     private function logExecution(string $log, array|object|bool $result): string

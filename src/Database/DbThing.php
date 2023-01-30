@@ -40,8 +40,23 @@ class DbThing {
 
     public function fetchAll(string $query): array
     {
-        $sql = $this->connect()->query($query);
-        $rows = $sql->fetchAll();
+        try {
+            $sql = $this->connect()->prepare($query);
+            $sql->execute();
+
+            $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+            return [
+                'success' => true,
+                'data' => $rows
+            ];
+        } catch (Exception $e) {
+            return [
+                'log' => 'Error to fetchAll data',
+                'success' => false,
+                'msg' => $e->getMessage()
+            ];
+        }
 
         return $rows;
     }

@@ -39,8 +39,6 @@ class ClientRepository {
     public function findAll()
     {
         $query = sprintf("SELECT * FROM %s", ClientsConstants::TABLE_NAME);
-        $rows = $this->db->fetchAll($query);
-        
-        return $rows;
+        return $this->db->fetchAll($query);
     }
 }

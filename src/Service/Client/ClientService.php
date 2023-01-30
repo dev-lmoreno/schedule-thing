@@ -85,9 +85,24 @@ class ClientService {
         );
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $findAll = $this->clientRepository->findAll();
-        return $findAll;
+
+        if ($findAll['success']) {
+            return CommomValidate::formatResponse(
+                true,
+                StatusCodeConstants::OK,
+                'Data from all clients successfully selected',
+                $findAll['data']
+            );
+        }
+
+        return CommomValidate::formatResponse(
+            false,
+            StatusCodeConstants::INTERNAL_SERVER_ERROR,
+            $findAll['msg'],
+            $findAll['data']
+        );
     }
 }
