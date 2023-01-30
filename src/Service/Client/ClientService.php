@@ -89,6 +89,9 @@ class ClientService {
     {
         $findAll = $this->clientRepository->findAll();
 
+        $totalRows = count($findAll['data']);
+        $findAll['data']['totalRows'] = $totalRows;
+
         if ($findAll['success']) {
             return CommomValidate::formatResponse(
                 true,
