@@ -6,10 +6,10 @@ use ScheduleThing\API\Routes\Endpoints;
 use ScheduleThing\Controller\DefaultController;
 
 class Router {
-    private string $url = '';
-    private string $prefix = '';
-    private string $resource = '';
-    private array $urlPaths = [];
+    private string  $url = '';
+    private string  $prefix = '';
+    private string  $resource = '';
+    private array   $urlPaths = [];
     private Request $request;
 
     public function __construct(string $url)

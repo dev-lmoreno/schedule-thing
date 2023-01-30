@@ -9,7 +9,7 @@ use ScheduleThing\Controller\Company\CompanyController;
 class DefaultController {
     const BASE_CONTROLLER_NAMESPACE = 'ScheduleThing\Controller';
     /**
-     * Realiza a instanciação dinâmica da classe de acordo com o prefix recebido
+     * Performs dynamic instantiation of the class according to the received prefix
      */
     public function redirect(string $prefix): object
     {

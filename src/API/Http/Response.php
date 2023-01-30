@@ -14,10 +14,10 @@ class Response {
     private array  $headers = [];
 
     public function __construct(
-        bool $success,
-        int $statusCode,
+        bool   $success,
+        int    $statusCode,
         string $msg,
-        mixed $data,
+        mixed  $data,
         string $contentType = 'application/json')
     {
         $this->success = $success;
@@ -25,26 +25,6 @@ class Response {
         $this->msg = $msg;
         $this->data  = $data;
         $this->setContentType($contentType);
-    }
-
-    public function setContentType(string $contentType): void
-    {
-        $this->contentType = $contentType;
-        $this->addHeader('Content-Type', $contentType);
-    }
-
-    public function addHeader(string $key, string $value): void
-    {
-        $this->headers[$key] = $value;
-    }
-
-    private function sendHeaders(): void
-    {
-        http_response_code($this->statusCode);
-
-        foreach ($this->headers as $key => $value) {
-            header($key . ': ' . $value);
-        }
     }
 
     public function sendResponse(): string|bool
@@ -59,5 +39,25 @@ class Response {
         );
 
         return json_encode($response);
+    }
+
+    public function setContentType(string $contentType): void
+    {
+        $this->contentType = $contentType;
+        $this->addHeader('Content-Type', $contentType);
+    }
+
+    private function addHeader(string $key, string $value): void
+    {
+        $this->headers[$key] = $value;
+    }
+
+    private function sendHeaders(): void
+    {
+        http_response_code($this->statusCode);
+
+        foreach ($this->headers as $key => $value) {
+            header($key . ': ' . $value);
+        }
     }
 }
