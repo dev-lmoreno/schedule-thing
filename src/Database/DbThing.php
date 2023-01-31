@@ -61,11 +61,11 @@ class DbThing {
         return $rows;
     }
 
-    public function fetchOne(string $query, string $field, int|string $value): array
+    public function fetchOne(string $query, int $id): array
     {
         try {
             $sql = $this->connect()->prepare($query);
-            $sql->execute([$field => $value]);
+            $sql->execute(['client_id' => $id]);
 
             $rows = $sql->fetch(PDO::FETCH_ASSOC);
 
@@ -78,7 +78,7 @@ class DbThing {
                 'log' => 'Error to fetchOne data',
                 'success' => false,
                 'msg' => $e->getMessage(),
-                'data' => $value
+                'data' => $id
             ];
         }
 

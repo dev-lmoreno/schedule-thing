@@ -96,13 +96,7 @@ class ClientTest {
 
     public function findOneClientTest(): array
     {
-        $dublesClients = self::prepareDublesClients();
-        $firstClient   = $dublesClients[0];
-
-        $findOneClient = $this->clientController->findOne(
-            'client_firstName',
-            $firstClient->firstName
-        );
+        $findOneClient = $this->clientController->findOne(4);
 
         return $findOneClient;
     }

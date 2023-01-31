@@ -60,32 +60,20 @@ class ClientRepository {
         return $this->db->fetchAll($query);
     }
 
-    public function findOne(string $field, int|string $value): array
+    public function findOne(int $id): array
     {
-        $where = '';
-        switch (gettype($value)) {
-            case 'integer':
-                $where = "{$field} = :{$field}";
-                break;
-            case 'string':
-                $where = "{$field} LIKE :{$field}";
-                $value = "%$value%";
-                break;
-            default:
-                $where = '';
-                break;
-        }
+        $where = "client_id = :client_id";
 
         $query = sprintf("
             SELECT
-                %s
+                *
             FROM
                 %s
             WHERE
                 %s
             LIMIT 1
-            ", $field, ClientsConstants::TABLE_NAME, $where);
+            ", ClientsConstants::TABLE_NAME, $where);
 
-        return $this->db->fetchOne($query, $field, $value);
+        return $this->db->fetchOne($query, $id);
     }
 }
