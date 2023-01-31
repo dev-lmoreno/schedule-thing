@@ -90,11 +90,11 @@ class ClientRepository {
         return $this->db->delete($query, $id);
     }
 
-    public function update(int $id, array $values): array
+    public function update(int $id, array|object $request_data): array
     {
         $set = [];
 
-        foreach($values as $column => $value) {
+        foreach($request_data as $column => $value) {
             $set[] = sprintf("%s = '%s'", $column, $value);
         }
 

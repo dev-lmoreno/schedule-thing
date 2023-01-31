@@ -98,7 +98,7 @@ class Request {
                 $response = $controller->create($request_data);
                 break;
             case MethodsConstants::PUT:
-                $response = $controller->update();
+                $response = $controller->update($urlIdParam, $request_data);
                 break;
             case MethodsConstants::DELETE:
                 $response = $controller->delete($urlIdParam);

@@ -159,33 +159,84 @@ class ClientService {
         );
     }
 
-    public function update(int $id, array $values): array
+    public function update(int $id, array|object $request_data): array
     {
         $findOne = $this->findOne($id);
 
         if ($findOne['success'] && $findOne['data']) {
-            $values['date_updated'] = new DateTime();
-            $values['date_updated'] = CommomValidate::getPropertyDate($values['date_updated']);
+            if (is_object($request_data)) {
+                $request_data = CommomValidate::convertObjectToArray($request_data);
+            }
 
-            $update = $this->clientRepository->update($id, $values);
+            $acceptedColumnsToUpdate = [
+                'firstName', 'lastName', 'email', 'cpf', 'password'
+            ];
 
-            if ($update['success']) {
-                if ($update['data']) {
-                    return CommomValidate::formatResponse(
-                        true,
-                        StatusCodeConstants::OK,
-                        'Client updated successfully',
-                        $update['data']
-                    );
+            foreach ($request_data as $column => $value) {
+                if (empty($value)) {
+                    unset($request_data[$column]);
+                    continue;
                 }
 
+                if (!in_array($column, $acceptedColumnsToUpdate)) {
+                    unset($request_data[$column]);
+                    continue;
+                }
+
+                if ($column === 'email') {
+                    $isValidEmail = CommomValidate::isValidEmail($request_data['email']);
+
+                    if ($isValidEmail === false) {
+                        return CommomValidate::formatResponse(
+                            false,
+                            StatusCodeConstants::INTERNAL_SERVER_ERROR,
+                            'Invalid Email to update',
+                            $isValidEmail
+                        );
+                    }
+                }
+
+                if ($column === 'cpf') {
+                    $isValidCpf = ClientValidate::isValidCpf($request_data['cpf']);
+
+                    if ($isValidCpf === false) {
+                        return CommomValidate::formatResponse(
+                            false,
+                            StatusCodeConstants::INTERNAL_SERVER_ERROR,
+                            'Invalid CPF to update',
+                            $isValidCpf
+                        );
+                    }
+                }
+
+                if ($column === 'password') {
+                    $request_data['password'] = md5($request_data['password']);
+                }
+
+                $request_data['client_'.$column] = $request_data[$column];
+                unset($request_data[$column]);
+            }
+
+            $request_data['date_updated'] = new DateTime();
+            $request_data['date_updated'] = CommomValidate::getPropertyDate($request_data['date_updated']);
+
+            $update = $this->clientRepository->update($id, $request_data);
+
+            if ($update['success'] && $update['data']) {
                 return CommomValidate::formatResponse(
                     true,
                     StatusCodeConstants::OK,
-                    $update['msg'],
+                    'Client updated successfully',
                     $update['data']
                 );
             }
+
+            return CommomValidate::formatResponse(
+                true,
+                StatusCodeConstants::OK,
+                $update['msg'],
+                $update['data']
+            );
         }
 
         return CommomValidate::formatResponse(

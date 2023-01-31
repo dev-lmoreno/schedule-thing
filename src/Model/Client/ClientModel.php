@@ -6,24 +6,24 @@ use DateTime;
 
 class ClientModel {
     public ?int $id;
-    public string $firstName;
-    public string $lastName;
-    public string $email;
-    public string $cpf;
-    public string $username;
-    public string $password;
+    public ?string $firstName;
+    public ?string $lastName;
+    public ?string $email;
+    public ?string $cpf;
+    public ?string $username;
+    public ?string $password;
     public ?DateTime $dateCreated;
     public ?DateTime $dateUpdated;
     public ?DateTime $dateDeleted;
 
     public function __construct(
         ?int $id,
-        string $firstName,
-        string $lastName,
-        string $email,
-        string $cpf,
-        string $username,
-        string $password,
+        ?string $firstName,
+        ?string $lastName,
+        ?string $email,
+        ?string $cpf,
+        ?string $username,
+        ?string $password,
         ?DateTime $dateCreated,
         ?DateTime $dateUpdated,
         ?DateTime $dateDeleted

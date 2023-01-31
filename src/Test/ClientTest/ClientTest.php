@@ -114,11 +114,11 @@ class ClientTest {
     public function updateClientTest(): array
     {
         $updateValues = [
-            'client_firstName' => 'Lucas update',
-            'client_lastName'  => 'Moreno update'
+            'firstName' => 'Lucas update',
+            'lastName'  => 'Moreno update'
         ];
 
-        $updateClient = $this->clientController->update(8, $updateValues);
+        $updateClient = $this->clientController->update(10, $updateValues);
         return $updateClient;
     }
 }
