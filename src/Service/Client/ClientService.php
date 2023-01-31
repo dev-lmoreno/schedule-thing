@@ -94,4 +94,25 @@ class ClientService {
             $findAll['data']
         );
     }
+
+    public function findOne(string $field, int|string $value): array
+    {
+        $findOne = $this->clientRepository->findOne($field, $value);
+
+        if ($findOne['success']) {
+            return CommomValidate::formatResponse(
+                true,
+                StatusCodeConstants::OK,
+                'Data from one client successfully selected',
+                $findOne['data']
+            );
+        }
+
+        return CommomValidate::formatResponse(
+            false,
+            StatusCodeConstants::INTERNAL_SERVER_ERROR,
+            $findOne['msg'],
+            $findOne['data']
+        );
+    }
 }

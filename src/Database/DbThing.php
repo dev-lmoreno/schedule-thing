@@ -61,6 +61,30 @@ class DbThing {
         return $rows;
     }
 
+    public function fetchOne(string $query, string $field, int|string $value): array
+    {
+        try {
+            $sql = $this->connect()->prepare($query);
+            $sql->execute([$field => $value]);
+
+            $rows = $sql->fetch(PDO::FETCH_ASSOC);
+
+            return [
+                'success' => true,
+                'data' => $rows
+            ];
+        } catch (Exception $e) {
+            return [
+                'log' => 'Error to fetchOne data',
+                'success' => false,
+                'msg' => $e->getMessage(),
+                'data' => $value
+            ];
+        }
+
+        return $rows;
+    }
+
     public function insert(string $query, array $values): array
     {
         try {
@@ -74,7 +98,8 @@ class DbThing {
             return [
                 'log' => 'Error to insert data',
                 'success' => false,
-                'msg' => $e->getMessage()
+                'msg' => $e->getMessage(),
+                'data' => $values
             ];
         }
     }

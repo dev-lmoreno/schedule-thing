@@ -28,6 +28,9 @@ class SystemTest {
                 $findAllClientTest = $this->clientTest->findAllClientTest();
                 $this->logExecution('findAllClientTest', $findAllClientTest);
                 break;
+            case 'findOne':
+                $findOneClientTest = $this->clientTest->findOneClientTest();
+                $this->logExecution('findOneClientTest', $findOneClientTest);
         }
     }
 

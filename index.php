@@ -8,7 +8,7 @@ use ScheduleThing\Test\SystemTest;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-$acceptedTestAction = ['create', 'findAll'];
+$acceptedTestAction = ['create', 'findAll', 'findOne'];
 
 $testMode   = $argv[1] ? 'test' : '';
 $testAction = $argv[2];

@@ -54,9 +54,38 @@ class ClientRepository {
         );
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $query = sprintf("SELECT * FROM %s", ClientsConstants::TABLE_NAME);
         return $this->db->fetchAll($query);
+    }
+
+    public function findOne(string $field, int|string $value): array
+    {
+        $where = '';
+        switch (gettype($value)) {
+            case 'integer':
+                $where = "{$field} = :{$field}";
+                break;
+            case 'string':
+                $where = "{$field} LIKE :{$field}";
+                $value = "%$value%";
+                break;
+            default:
+                $where = '';
+                break;
+        }
+
+        $query = sprintf("
+            SELECT
+                %s
+            FROM
+                %s
+            WHERE
+                %s
+            LIMIT 1
+            ", $field, ClientsConstants::TABLE_NAME, $where);
+
+        return $this->db->fetchOne($query, $field, $value);
     }
 }

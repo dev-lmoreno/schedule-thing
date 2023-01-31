@@ -11,7 +11,11 @@ class ClientController {
         $this->clientService = new clientService();
     }
 
-    public function findOne() {}
+    public function findOne(string $field, int|string $value): array
+    {
+        $findOne = $this->clientService->findOne($field, $value);
+        return $findOne;
+    }
 
     public function findAll(): array
     {
