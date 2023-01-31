@@ -12,6 +12,7 @@
 6. [Clonando o repositório](#clonando-repositorio)
 7. [Configurando o projeto](#configurando-projeto)
 8. [Rotas disponíveis](#rotas)
+9. [Testes do sistema](#testes)
 ---
 ### <a name="features-atuais">Features atuais</a>
 * Cadastro de cliente
@@ -187,7 +188,26 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
             }
         }
         ```
-}
+---
+### <a name="testes">Testes do sistema</a>
+* O sistema possui scripts de testes de todas suas funções disponíveis até o momento.
+* Para realizar os testes do sistema é necessário executar o index.php em modo teste, para isso execute `php index.php test {action}` na raiz.
+    * Onde temos as seguintes `actions` para teste
+        * `database`: realiza o teste de conexão com o banco.
+            * `php index.php test database`
+        * `create`: insere um regsitro no banco.
+            * `php index.php test create`
+        * `findAll`: busca todos os registros no banco.
+            * `php index.php test findAll`
+        * `findOne`: busca apenas um registro no banco.
+            * `php index.php test findOne`
+        * `delete`: deleta um registro no banco.
+            * `php index.php test delete`
+        * `update`: atualiza um registro no banco.
+            * * `php index.php test update`
+        * `all`:  execute todos os teste acima de uma única vez.
+            * * `php index.php test all`
+    * **Observação**: Até o momento esses testes são executados apenas para os `Clientes`.
 
 ---
 © 2023 Moscão Company
