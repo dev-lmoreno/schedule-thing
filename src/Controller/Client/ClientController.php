@@ -35,6 +35,10 @@ class ClientController {
         return $delete;
     }
 
-    public function update() {}
+    public function update(int $id, array $values): array
+    {
+        $update = $this->clientService->update($id, $values);
+        return $update;
+    }
 
 }

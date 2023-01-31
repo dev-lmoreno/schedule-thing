@@ -9,7 +9,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
 if (isset($argv)) {
-    $acceptedTestAction = ['create', 'findAll', 'findOne', 'delete'];
+    $acceptedTestAction = ['create', 'findAll', 'findOne', 'delete', 'update'];
 
     $testMode   = $argv[1] ? 'test' : '';
     $testAction = $argv[2];

@@ -101,6 +101,26 @@ class DbThing {
         }
     }
 
+    public function update(string $query, int $id): array
+    {
+        try {
+            $sql = $this->connect()->prepare($query);
+            $sql->execute();
+
+            return [
+                'success' => true,
+                'data' => $id
+            ];
+        } catch (Exception $e) {
+            return [
+                'log' => 'Error to update client',
+                'success' => false,
+                'msg' => $e->getMessage(),
+                'data' => $id
+            ];
+        }
+    }
+
     public function insert(string $query, array $values): array
     {
         try {

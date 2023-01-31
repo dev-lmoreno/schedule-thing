@@ -110,4 +110,15 @@ class ClientTest {
         $deleteClient = $this->clientController->delete(2);
         return $deleteClient;
     }
+
+    public function updateClientTest(): array
+    {
+        $updateValues = [
+            'client_firstName' => 'Lucas update',
+            'client_lastName'  => 'Moreno update'
+        ];
+
+        $updateClient = $this->clientController->update(8, $updateValues);
+        return $updateClient;
+    }
 }

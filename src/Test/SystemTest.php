@@ -34,6 +34,9 @@ class SystemTest {
             case 'delete':
                 $deleteClientTest = $this->clientTest->deleteClientTest();
                 $this->logExecution('deleteClientTest', $deleteClientTest);
+            case 'update':
+                $updateClientTest = $this->clientTest->updateClientTest();
+                $this->logExecution('updateClientTest', $updateClientTest);
         }
     }
 

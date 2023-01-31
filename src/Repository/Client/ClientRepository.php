@@ -89,4 +89,21 @@ class ClientRepository {
 
         return $this->db->delete($query, $id);
     }
+
+    public function update(int $id, array $values): array
+    {
+        $set = [];
+
+        foreach($values as $column => $value) {
+            $set[] = sprintf("%s = '%s'", $column, $value);
+        }
+
+        $set = implode(', ', $set);
+
+        $query = sprintf("UPDATE %s SET %s WHERE client_id = %s LIMIT 1",
+            ClientsConstants::TABLE_NAME, $set, $id
+        );
+
+        return $this->db->update($query, $id);
+    }
 }

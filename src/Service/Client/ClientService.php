@@ -158,4 +158,41 @@ class ClientService {
             $id
         );
     }
+
+    public function update(int $id, array $values): array
+    {
+        $findOne = $this->findOne($id);
+
+        if ($findOne['success'] && $findOne['data']) {
+            $values['date_updated'] = new DateTime();
+            $values['date_updated'] = CommomValidate::getPropertyDate($values['date_updated']);
+
+            $update = $this->clientRepository->update($id, $values);
+
+            if ($update['success']) {
+                if ($update['data']) {
+                    return CommomValidate::formatResponse(
+                        true,
+                        StatusCodeConstants::OK,
+                        'Client updated successfully',
+                        $update['data']
+                    );
+                }
+
+                return CommomValidate::formatResponse(
+                    true,
+                    StatusCodeConstants::OK,
+                    $update['msg'],
+                    $update['data']
+                );
+            }
+        }
+
+        return CommomValidate::formatResponse(
+            false,
+            StatusCodeConstants::INTERNAL_SERVER_ERROR,
+            'Client not found in database to update',
+            $id
+        );
+    }
 }
