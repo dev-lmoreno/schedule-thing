@@ -195,7 +195,7 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
     * Onde temos as seguintes `actions` para teste
         * `database`: realiza o teste de conexão com o banco.
             * `php index.php test database`
-        * `create`: insere um regsitro no banco.
+        * `create`: insere um registro no banco.
             * `php index.php test create`
         * `findAll`: busca todos os registros no banco.
             * `php index.php test findAll`
