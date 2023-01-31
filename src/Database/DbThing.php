@@ -57,8 +57,6 @@ class DbThing {
                 'msg' => $e->getMessage()
             ];
         }
-
-        return $rows;
     }
 
     public function fetchOne(string $query, int $id): array
@@ -81,8 +79,26 @@ class DbThing {
                 'data' => $id
             ];
         }
+    }
 
-        return $rows;
+    public function delete(string $query, int $id): array
+    {
+        try {
+            $sql = $this->connect()->prepare($query);
+            $sql->execute();
+
+            return [
+                'success' => true,
+                'data' => $id
+            ];
+        } catch (Exception $e) {
+            return [
+                'log' => 'Error to delete client',
+                'success' => false,
+                'msg' => $e->getMessage(),
+                'data' => $id
+            ];
+        }
     }
 
     public function insert(string $query, array $values): array

@@ -2,12 +2,16 @@
 
 namespace ScheduleThing\Repository\Client;
 
+use DateTime;
 use ScheduleThing\Database\DbThing;
 use ScheduleThing\Constants\Clients\ClientsConstants;
 use ScheduleThing\Constants\Http\StatusCodeConstants;
 use ScheduleThing\Validate\CommomValidate;
 
 class ClientRepository {
+    const WHERE_CLIENT_ID   = "client_id = :client_id";
+    const WHERE_NOT_DELETED = "date_deleted IS NULL";
+
     public DbThing $db;
 
     public function __construct() {
@@ -56,14 +60,13 @@ class ClientRepository {
 
     public function findAll(): array
     {
-        $query = sprintf("SELECT * FROM %s", ClientsConstants::TABLE_NAME);
+        $query = sprintf("SELECT * FROM %s WHERE %s",
+            ClientsConstants::TABLE_NAME, self::WHERE_NOT_DELETED);
         return $this->db->fetchAll($query);
     }
 
     public function findOne(int $id): array
     {
-        $where = "client_id = :client_id";
-
         $query = sprintf("
             SELECT
                 *
@@ -71,9 +74,19 @@ class ClientRepository {
                 %s
             WHERE
                 %s
+                AND %s
             LIMIT 1
-            ", ClientsConstants::TABLE_NAME, $where);
+            ", ClientsConstants::TABLE_NAME, self::WHERE_CLIENT_ID, self::WHERE_NOT_DELETED);
 
         return $this->db->fetchOne($query, $id);
+    }
+
+    public function delete(int $id, string $dateDeleted): array
+    {
+        $query = sprintf("UPDATE %s SET date_deleted = '%s' WHERE client_id = %s LIMIT 1",
+            ClientsConstants::TABLE_NAME, $dateDeleted, $id
+        );
+
+        return $this->db->delete($query, $id);
     }
 }

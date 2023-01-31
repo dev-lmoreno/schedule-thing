@@ -75,7 +75,8 @@ class Request {
     public function sendRequest(
         object $controller,
         string $prefix = '',
-        string $resource
+        string $resource = '',
+        int    $urlIdParam = 0
     ): array {
         $response = [];
 
@@ -100,7 +101,7 @@ class Request {
                 $response = $controller->update();
                 break;
             case MethodsConstants::DELETE:
-                $response = $controller->delete();
+                $response = $controller->delete($urlIdParam);
                 break;
         }
 

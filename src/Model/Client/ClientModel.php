@@ -14,6 +14,7 @@ class ClientModel {
     public string $password;
     public ?DateTime $dateCreated;
     public ?DateTime $dateUpdated;
+    public ?DateTime $dateDeleted;
 
     public function __construct(
         ?int $id,
@@ -24,7 +25,8 @@ class ClientModel {
         string $username,
         string $password,
         ?DateTime $dateCreated,
-        ?DateTime $dateUpdated
+        ?DateTime $dateUpdated,
+        ?DateTime $dateDeleted
     ) {
         $this->id            = $id;
         $this->firstName     = $firstName;
@@ -35,5 +37,6 @@ class ClientModel {
         $this->password      = $password;
         $this->dateCreated   = $dateCreated;
         $this->dateUpdated   = $dateUpdated;
+        $this->dateDeleted   = $dateDeleted;
     }
 }

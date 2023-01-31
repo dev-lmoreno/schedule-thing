@@ -31,6 +31,9 @@ class SystemTest {
             case 'findOne':
                 $findOneClientTest = $this->clientTest->findOneClientTest();
                 $this->logExecution('findOneClientTest', $findOneClientTest);
+            case 'delete':
+                $deleteClientTest = $this->clientTest->deleteClientTest();
+                $this->logExecution('deleteClientTest', $deleteClientTest);
         }
     }
 

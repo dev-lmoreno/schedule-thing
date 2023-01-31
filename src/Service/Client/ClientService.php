@@ -124,4 +124,38 @@ class ClientService {
             $findOne['data']
         );
     }
+
+    public function delete(int $id): array
+    {
+        $findOne = $this->findOne($id);
+
+        if ($findOne['success'] && $findOne['data']) {
+            $dateDeleted = CommomValidate::getPropertyDate(new DateTime());
+
+            $delete = $this->clientRepository->delete($id, $dateDeleted);
+
+            if ($delete['success']) {
+                return CommomValidate::formatResponse(
+                    true,
+                    StatusCodeConstants::OK,
+                    'Client successfully deleted',
+                    $delete['data']
+                );
+            }
+
+            return CommomValidate::formatResponse(
+                false,
+                StatusCodeConstants::INTERNAL_SERVER_ERROR,
+                $delete['msg'],
+                $delete['data']
+            );
+        }
+
+        return CommomValidate::formatResponse(
+            true,
+            StatusCodeConstants::OK,
+            'Client not found in database to delete',
+            $id
+        );
+    }
 }

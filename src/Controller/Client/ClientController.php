@@ -29,7 +29,11 @@ class ClientController {
         return $create;
     }
 
-    public function delete() {}
+    public function delete(int $id): array
+    {
+        $delete = $this->clientService->delete($id);
+        return $delete;
+    }
 
     public function update() {}
 

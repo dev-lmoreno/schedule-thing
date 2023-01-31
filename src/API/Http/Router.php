@@ -11,6 +11,7 @@ class Router {
     private string  $url = '';
     private string  $prefix = '';
     private string  $resource = '';
+    private int     $urlIdParam = 0;
     private array   $urlPaths = [];
     private Request $request;
 
@@ -21,6 +22,7 @@ class Router {
         $this->urlPaths = self::parseUrl();
         $this->setPrefix();
         $this->setResource();
+        $this->setIdUrlParam();
     }
 
     private function parseUrl(): array
@@ -41,6 +43,11 @@ class Router {
         $this->resource = $this->urlPaths[3] ?? '';
     }
 
+    private function setIdUrlParam(): void
+    {
+        $this->urlIdParam = $this->urlPaths[4] ?? 0;
+    }
+
     public function isApiRequest(): bool
     {
         return $this->urlPaths[1] === 'api' ? true : false;
@@ -56,7 +63,8 @@ class Router {
             $returnRequest = $this->request->sendRequest(
                 $controller,
                 $this->prefix,
-                $this->resource
+                $this->resource,
+                $this->urlIdParam
             );
 
             $response = (new Response(

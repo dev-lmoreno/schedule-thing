@@ -34,10 +34,10 @@ class Endpoints {
     {
         $endpoints = [
             'clients' => [
-                ''.
-                'create',
-                'update',
-                'delete',
+                '' => '',
+                'create' => 'create',
+                'update' => 'update',
+                'delete' => 'delete',
             ],
         ];
 

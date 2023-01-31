@@ -26,6 +26,7 @@ class ClientTest {
                 'teste123',
                 new DateTime(),
                 new DateTime(),
+                null
             ),
             new ClientModel(
                 null,
@@ -37,6 +38,7 @@ class ClientTest {
                 'teste123',
                 new DateTime(),
                 new DateTime(),
+                null
             ),
             new ClientModel(
                 null,
@@ -48,6 +50,7 @@ class ClientTest {
                 'password123',
                 new DateTime(),
                 new DateTime(),
+                null
             ),
             new ClientModel(
                 null,
@@ -59,6 +62,7 @@ class ClientTest {
                 'password456',
                 new DateTime(),
                 new DateTime(),
+                null
             ),
             new ClientModel(
                 null,
@@ -70,6 +74,7 @@ class ClientTest {
                 'password789',
                 new DateTime(),
                 new DateTime(),
+                null
             ),
         ];
 
@@ -96,8 +101,13 @@ class ClientTest {
 
     public function findOneClientTest(): array
     {
-        $findOneClient = $this->clientController->findOne(4);
-
+        $findOneClient = $this->clientController->findOne(3);
         return $findOneClient;
+    }
+
+    public function deleteClientTest(): array
+    {
+        $deleteClient = $this->clientController->delete(2);
+        return $deleteClient;
     }
 }

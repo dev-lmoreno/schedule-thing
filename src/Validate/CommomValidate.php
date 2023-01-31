@@ -35,7 +35,7 @@ class CommomValidate {
         }
 
         $validatedFields = [];
-        $canBeEmpty = ['id', 'dateCreated', 'dateUpdated'];
+        $canBeEmpty = ['id', 'dateCreated', 'dateUpdated', 'dateDeleted'];
 
         foreach($fields as $key => $field) {
             if (empty($field) && !in_array($key, $canBeEmpty)) {
@@ -69,6 +69,14 @@ class CommomValidate {
 
     public static function getPropertyDate($date): string
     {
-        return $date->format('Y-m-d H:i:s');
+        switch (gettype($date)) {
+            case 'array':
+                $date = $date['date'];
+                break;
+            case 'object':
+                $date = $date->format('Y-m-d H:i:s');
+                break;
+        }
+        return $date;
     }
 }
