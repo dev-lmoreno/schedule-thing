@@ -4,6 +4,8 @@ namespace ScheduleThing\Repository\Client;
 
 use ScheduleThing\Database\DbThing;
 use ScheduleThing\Constants\Clients\ClientsConstants;
+use ScheduleThing\Constants\Http\StatusCodeConstants;
+use ScheduleThing\Validate\CommomValidate;
 
 class ClientRepository {
     public DbThing $db;
@@ -33,7 +35,23 @@ class ClientRepository {
                 (:id, :firstName, :lastName, :email, :cpf , :username, md5(:password), :dateCreated, :dateUpdated)
         ", ClientsConstants::TABLE_NAME, ClientsConstants::COLUMN_ID);
 
-        return $this->db->insert($query, $values);
+        $create = $this->db->insert($query, $values);
+
+        if ($create['success']) {
+            return CommomValidate::formatResponse(
+                true,
+                StatusCodeConstants::OK,
+                'Client inserted successfully',
+                $values
+            );
+        }
+
+        return CommomValidate::formatResponse(
+            false,
+            StatusCodeConstants::INTERNAL_SERVER_ERROR,
+            $create['msg'],
+            $values
+        );
     }
 
     public function findAll()

@@ -12,8 +12,8 @@ class ClientModel {
     public string $cpf;
     public string $username;
     public string $password;
-    public DateTime $dateCreated;
-    public DateTime $dateUpdated;
+    public ?DateTime $dateCreated;
+    public ?DateTime $dateUpdated;
 
     public function __construct(
         ?int $id,
@@ -23,8 +23,8 @@ class ClientModel {
         string $cpf,
         string $username,
         string $password,
-        DateTime $dateCreated,
-        DateTime $dateUpdated
+        ?DateTime $dateCreated,
+        ?DateTime $dateUpdated
     ) {
         $this->id            = $id;
         $this->firstName     = $firstName;

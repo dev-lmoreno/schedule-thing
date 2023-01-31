@@ -15,7 +15,7 @@ class ClientService {
         $this->clientRepository = new ClientRepository();
     }
 
-    public function create($request_data): array
+    public function create(array|object $request_data): array
     {
         if (is_object($request_data)) {
             $request_data = CommomValidate::convertObjectToArray($request_data);
@@ -68,21 +68,7 @@ class ClientService {
 
         $create = $this->clientRepository->create($request_data);
 
-        if ($create['success']) {
-            return CommomValidate::formatResponse(
-                true,
-                StatusCodeConstants::OK,
-                'Client inserted successfully',
-                $request_data
-            );
-        }
-
-        return CommomValidate::formatResponse(
-            false,
-            StatusCodeConstants::INTERNAL_SERVER_ERROR,
-            $create['msg'],
-            $request_data
-        );
+        return $create;
     }
 
     public function findAll(): array

@@ -4,6 +4,7 @@ namespace ScheduleThing\API\Http;
 
 use ScheduleThing\API\Routes\Endpoints;
 use ScheduleThing\Controller\DefaultController;
+use ScheduleThing\Model\DefaultModel;
 
 class Router {
     private string  $url = '';
@@ -63,9 +64,7 @@ class Router {
 
         $controller = (new DefaultController())->redirect($this->prefix);
 
-        //$request_data = $this->request->getRequestData();
-
-        $returnRequest = $this->request->sendRequest($controller);
+        $returnRequest = $this->request->sendRequest($controller, $this->prefix);
 
         $response = (new Response(
             $returnRequest['success'],
