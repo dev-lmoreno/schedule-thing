@@ -72,13 +72,25 @@ class Request {
         return $model;
     }
 
-    public function sendRequest(object $controller, string $prefix = ''): array
-    {
+    public function sendRequest(
+        object $controller,
+        string $prefix = '',
+        string $resource
+    ): array {
         $response = [];
-        $request_data = self::formatRequestData(self::getRequestData(), $prefix);
+
+        $getRequestData = self::getRequestData();
+        if ($getRequestData) {
+            $request_data = self::formatRequestData($getRequestData, $prefix);
+        }
 
         switch ($this->getHttpMethod()) {
             case MethodsConstants::GET:
+                if ($resource) {
+                    $response = $controller->findOne($resource);
+                    break;
+                }
+
                 $response = $controller->findAll();
                 break;
             case MethodsConstants::POST:

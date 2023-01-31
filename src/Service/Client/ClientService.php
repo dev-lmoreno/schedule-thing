@@ -100,10 +100,19 @@ class ClientService {
         $findOne = $this->clientRepository->findOne($id);
 
         if ($findOne['success']) {
+            if ($findOne['data']) {
+                return CommomValidate::formatResponse(
+                    true,
+                    StatusCodeConstants::OK,
+                    'Data from one client successfully selected',
+                    $findOne['data']
+                );
+            }
+
             return CommomValidate::formatResponse(
                 true,
                 StatusCodeConstants::OK,
-                'Data from one client successfully selected',
+                'Client not found in database',
                 $findOne['data']
             );
         }

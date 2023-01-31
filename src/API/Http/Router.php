@@ -3,6 +3,7 @@
 namespace ScheduleThing\API\Http;
 
 use ScheduleThing\API\Routes\Endpoints;
+use ScheduleThing\Constants\Http\StatusCodeConstants;
 use ScheduleThing\Controller\DefaultController;
 use ScheduleThing\Model\DefaultModel;
 
@@ -30,51 +31,55 @@ class Router {
         return $paths;
     }
 
-    public function isApiRequest(): bool
-    {
-        return $this->urlPaths[1] === 'api' ? true : false;
-    }
-
     private function setPrefix(): void
     {
         $this->prefix = $this->urlPaths[2];
     }
 
-    public function getPrefix(): string
-    {
-        return $this->prefix;
-    }
-
     private function setResource(): void
     {
-        $this->resource = $this->urlPaths[3];
+        $this->resource = $this->urlPaths[3] ?? '';
     }
 
-    public function getResource(): string
+    public function isApiRequest(): bool
     {
-        return $this->resource;
+        return $this->urlPaths[1] === 'api' ? true : false;
     }
 
     public function run(): bool
     {
         $endpointExist = (new Endpoints())->validateExistEndpoint($this->prefix, $this->resource);
-        if (!$endpointExist) {
-            return false;
+
+        if ($endpointExist) {
+            $controller = (new DefaultController())->redirect($this->prefix);
+
+            $returnRequest = $this->request->sendRequest(
+                $controller,
+                $this->prefix,
+                $this->resource
+            );
+
+            $response = (new Response(
+                $returnRequest['success'],
+                $returnRequest['statusCode'],
+                $returnRequest['msg'],
+                $returnRequest['data']
+            ))->sendResponse();
+
+            echo $response;
+
+            return true;
         }
 
-        $controller = (new DefaultController())->redirect($this->prefix);
-
-        $returnRequest = $this->request->sendRequest($controller, $this->prefix);
-
         $response = (new Response(
-            $returnRequest['success'],
-            $returnRequest['statusCode'],
-            $returnRequest['msg'],
-            $returnRequest['data']
+            false,
+            StatusCodeConstants::NOT_FOUND,
+            "Endpoint /{$this->resource} not found",
+            "HTTP/1.1 404 Not Found"
         ))->sendResponse();
 
         echo $response;
 
-        return true;
+        return false;
     }
 }
