@@ -9,7 +9,7 @@ class DefaultModel {
     const BASE_MODEL_NAMESPACE = 'ScheduleThing\Model';
 
     /**
-     * Remove classes from the model that should not be sent by the request
+     * Remove classvar from the model that should not be sent by the request
      */
     private function addGhostValueToClassVar(array $classVars): array
     {
