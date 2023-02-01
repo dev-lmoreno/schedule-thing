@@ -6,10 +6,10 @@ use ScheduleThing\Constants\Http\StatusCodeConstants;
 
 class CommomValidate {
     public static function formatResponse(
-        bool $success = true,
-        int $statusCode = StatusCodeConstants::OK,
-        string $msg = '',
-        mixed $data
+        bool $success,
+        int $statusCode,
+        string $msg,
+        mixed $data,
     ): array {
         return [
             'success' => $success,

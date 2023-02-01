@@ -1,3 +1,5 @@
+CREATE DATABASE schedulething;
+
 CREATE TABLE schedulething.Clients (
 	client_id BIGINT auto_increment NOT NULL,
 	client_firstName varchar(255) NOT NULL,

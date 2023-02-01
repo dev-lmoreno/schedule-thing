@@ -65,7 +65,7 @@ class Request {
     /**
      * Receives the request_data and converts it to the model related to the request
      */
-    private function formatRequestData(array $request_data = [], string $prefix)
+    private function formatRequestData(array $request_data = [], string $prefix = '')
     {
         $model = (new DefaultModel())->convertRequestDataToModel($request_data, $prefix);
 

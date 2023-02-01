@@ -5,7 +5,6 @@ namespace ScheduleThing\API\Http;
 use ScheduleThing\API\Routes\Endpoints;
 use ScheduleThing\Constants\Http\StatusCodeConstants;
 use ScheduleThing\Controller\DefaultController;
-use ScheduleThing\Model\DefaultModel;
 
 class Router {
     private string  $url = '';
@@ -35,7 +34,7 @@ class Router {
 
     private function setPrefix(): void
     {
-        $this->prefix = $this->urlPaths[2];
+        $this->prefix = $this->urlPaths[2] ?? '';
     }
 
     private function setResource(): void
