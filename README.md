@@ -74,6 +74,7 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
 * Também é necessário configurar as variáveis de ambiente disponibilziadas no arquivo .env.example
 ---
 ### <a name="rotas">Rotas disponíveis</a>
+* **Postman Collection**: https://documenter.getpostman.com/view/17710608/2s935kNRDb  
 * Exemplo da chamada para API: `{url}/{prefix}/{resource}`
 * Clientes  
     1.**[Listagem de todos clientes](#client-list)**  
