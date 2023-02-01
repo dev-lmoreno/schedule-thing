@@ -75,7 +75,7 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
 ---
 ### <a name="rotas">Rotas disponíveis</a>
 * Exemplo da chamada para API: `{url}/{prefix}/{resource}`
-* Clientes
+* Clientes  
     1.**[Listagem de todos clientes](#client-list)**  
     2.**[Listagem de um cliente específico](#client-listOne)**  
     3.**[Cadastro de clientes](#client-create)**  
