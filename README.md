@@ -76,11 +76,11 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
 ### <a name="rotas">Rotas disponíveis</a>
 * Exemplo da chamada para API: `{url}/{prefix}/{resource}`
 * Clientes
-    1.**[Listagem de todos clientes](#client-list)**
-    2.**[Listagem de um cliente específico](#client-listOne)**
-    3.**[Cadastro de clientes](#client-create)**
-    4.**[Atualização de clientes](#client-update)**
-    5.**[Exclusão de um cliente específico](#client-delete)**
+    1.**[Listagem de todos clientes](#client-list)**  
+    2.**[Listagem de um cliente específico](#client-listOne)**  
+    3.**[Cadastro de clientes](#client-create)**  
+    4.**[Atualização de clientes](#client-update)**  
+    5.**[Exclusão de um cliente específico](#client-delete)**  
     <br>
 
     * <a name="client-list">Listagem de todos clientes</a>
