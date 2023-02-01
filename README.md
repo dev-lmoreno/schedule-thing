@@ -75,9 +75,16 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
 ---
 ### <a name="rotas">Rotas disponíveis</a>
 * Exemplo da chamada para API: `{url}/{prefix}/{resource}`
-* Clientes (`/list, /create`)
-    * Listagem de todos clientes
-        *   `http://127.0.0.1:8001/api/clients/list`
+* Clientes
+    1.**[Listagem de todos clientes](#client-list)**
+    2.**[Listagem de um cliente específico](#client-listOne)**
+    3.**[Cadastro de clientes](#client-create)**
+    4.**[Atualização de clientes](#client-update)**
+    5.**[Exclusão de um cliente específico](#client-delete)**
+    <br>
+
+    * <a name="client-list">Listagem de todos clientes</a>
+        *   `GET http://127.0.0.1:8001/api/clients`
         * Retorno da listagem
             ```
             {
@@ -155,9 +162,31 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                 ]
             }
             ```
-    * Cadastro de clientes
-        *   `http://127.0.0.1:8001/api/clients/create`
-            * É preciso passar o seguinte body em formato `application/json`
+    * <a name="client-listOne">Listagem de um cliente específico</a>
+        *   `GET http://127.0.0.1:8001/api/clients/{client_id}`
+        * Retorno da listagem de um cliente específico
+            ```
+            {
+                "success": true,
+                "statusCode": 200,
+                "msg": "Data from one client successfully selected",
+                "data": {
+                    "client_id": 4,
+                    "client_firstName": "Lukita",
+                    "client_lastName": "Moreno",
+                    "client_email": "lucasacm007@gmail.com",
+                    "client_cpf": "47413606011",
+                    "client_username": "lukita",
+                    "client_password": "aa1bf4646de67fd9086cf6c79007026c",
+                    "date_created": "2023-01-31 20:58:47",
+                    "date_updated": "2023-01-31 20:58:47",
+                    "date_deleted": null
+                }
+            }
+            ```
+    * <a name="client-create">Cadastro de clientes</a>
+        *   `POST http://127.0.0.1:8001/api/clients/create`
+            * É preciso passar o seguinte body em formato `raw application/json`
             * exemplo de body
                 ```
                 {
@@ -171,23 +200,55 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                 ```
 
         * Retorno do cadastro
-        ```
-        {
-            "success": true,
-            "statusCode": 200,
-            "msg": "Client inserted successfully",
-            "data": {
-                "firstName": "Tony",
-                "lastName": "Stark",
-                "email": "thebestavenger@avengers.com",
-                "cpf": "61131919076",
-                "username": "ironman",
-                "password": "thebest",
-                "dateCreated": "2023-01-30 18:18:07",
-                "dateUpdated": "2023-01-30 18:18:07"
+            ```
+            {
+                "success": true,
+                "statusCode": 200,
+                "msg": "Client inserted successfully",
+                "data": {
+                    "firstName": "Tony",
+                    "lastName": "Stark",
+                    "email": "thebestavenger@avengers.com",
+                    "cpf": "61131919076",
+                    "username": "ironman",
+                    "password": "thebest",
+                    "dateCreated": "2023-01-30 18:18:07",
+                    "dateUpdated": "2023-01-30 18:18:07"
+                }
             }
-        }
-        ```
+            ```
+    * <a name="client-update">Atualização de clientes</a>
+        *   `POST http://127.0.0.1:8001/api/clients/update/{client_id}`
+            * É preciso passar o seguinte body em formato `raw application/json` específicando os campos que deseja alterar. Os Campos **válidos** para alteração são `firstName, lastName, email, cpf e password`.
+            * exemplo de body
+                ```
+                {
+                    "firstName": "Lucas teste",
+                    "lastName": "Moreno teste",
+                    "email": "lucasacmteste007@gmail.com"
+                }
+                ```
+        * Retorno da atualização, onde `data` é o `{client_id}` passado na requisição.
+            ```
+            {
+                "success": true,
+                "statusCode": 200,
+                "msg": "Client updated successfully",
+                "data": 4
+            }
+            ```
+    * <a name="client-delete">Exclusão de um cliente específico</a>
+        *   `DELETE http://127.0.0.1:8001/api/clients/delete/{client_id}`
+        * Retorno da exclusão, onde `data` é o `{client_id}` passado na requisição.
+            ```
+            {
+                "success": true,
+                "statusCode": 200,
+                "msg": "Client successfully deleted",
+                "data": 4
+            }
+            ```
+            * A exclusão do cliente é feita de maneira lógica, é atualizado o valor da coluna `date_deleted` na tabela `Clients` para manter os dados no banco.
 ---
 ### <a name="testes">Testes do sistema</a>
 * O sistema possui scripts de testes de todas suas funções disponíveis até o momento.
