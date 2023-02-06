@@ -14,47 +14,80 @@ class SystemTest {
         $this->connectionTest = new ConnectionTest();
     }
 
-    public function execute(string $testAction = ''): void
+    public function execute(string $testAction = 'all'): void
     {
         switch ($testAction) {
             case 'database':
-                $connectionTest = $this->connectionTest->connect();
-                $this->logExecution('connection', $connectionTest);
+                $this->runDatabaseTest();
                 break;
             case 'create':
-                $createClientTest = $this->clientTest->createClientTest();
-                $this->logExecution('createClientTest', $createClientTest);
+                $this->runCreateClientTest();
                 break;
             case 'findAll':
-                $findAllClientTest = $this->clientTest->findAllClientTest();
-                $this->logExecution('findAllClientTest', $findAllClientTest);
+                $this->runFindAllClientTest();
                 break;
             case 'findOne':
-                $findOneClientTest = $this->clientTest->findOneClientTest();
-                $this->logExecution('findOneClientTest', $findOneClientTest);
+                $this->runFindOneClientTest();
                 break;
             case 'delete':
-                $deleteClientTest = $this->clientTest->deleteClientTest();
-                $this->logExecution('deleteClientTest', $deleteClientTest);
+                $this->runDeleteClientTest();
                 break;
             case 'update':
-                $updateClientTest = $this->clientTest->updateClientTest();
-                $this->logExecution('updateClientTest', $updateClientTest);
+                $this->runUpdateClientTest();
                 break;
             case 'all':
-                $connectionTest = $this->connectionTest->connect();
-                $this->logExecution('connection', $connectionTest);
-                $createClientTest = $this->clientTest->createClientTest();
-                $this->logExecution('createClientTest', $createClientTest);
-                $findAllClientTest = $this->clientTest->findAllClientTest();
-                $this->logExecution('findAllClientTest', $findAllClientTest);
-                $findOneClientTest = $this->clientTest->findOneClientTest();
-                $this->logExecution('findOneClientTest', $findOneClientTest);
-                $deleteClientTest = $this->clientTest->deleteClientTest();
-                $this->logExecution('deleteClientTest', $deleteClientTest);
-                $updateClientTest = $this->clientTest->updateClientTest();
-                $this->logExecution('updateClientTest', $updateClientTest);
+                $this->executeAllTests();
+                break;
+            default:
+                $this->executeAllTests();
+                break;
         }
+    }
+
+    public function executeAllTests(): void
+    {
+        $this->runDatabaseTest();
+        $this->runCreateClientTest();
+        $this->runFindAllClientTest();
+        $this->runFindOneClientTest();
+        $this->runDeleteClientTest();
+        $this->runUpdateClientTest();
+    }
+
+    private function runDatabaseTest(): void
+    {
+        $connectionTest = $this->connectionTest->connect();
+        $this->logExecution('Starting connection test', $connectionTest);
+    }
+
+    private function runCreateClientTest(): void
+    {
+        $createClientTest = $this->clientTest->createClientTest();
+        $this->logExecution('Starting create client test', $createClientTest);
+    }
+
+    private function runFindAllClientTest(): void
+    {
+        $findAllClientTest = $this->clientTest->findAllClientTest();
+        $this->logExecution('Starting find all client test', $findAllClientTest);
+    }
+
+    private function runFindOneClientTest(): void
+    {
+        $findOneClientTest = $this->clientTest->findOneClientTest();
+        $this->logExecution('Starting find one client test', $findOneClientTest);
+    }
+
+    private function runDeleteClientTest(): void
+    {
+        $deleteClientTest = $this->clientTest->deleteClientTest();
+        $this->logExecution('Starting delete client test', $deleteClientTest);
+    }
+
+    private function runUpdateClientTest(): void
+    {
+        $updateClientTest = $this->clientTest->updateClientTest();
+        $this->logExecution('Starting update client test', $updateClientTest);
     }
 
     private function logExecution(string $log, array|object|bool $result): string
