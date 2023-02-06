@@ -2,23 +2,30 @@
 
 namespace ScheduleThing\Test\DatabaseTest;
 
+use ScheduleThing\Constants\Http\StatusCodeConstants;
 use ScheduleThing\Database\DbThing;
+use ScheduleThing\Exceptions\Database\DatabaseException;
+use ScheduleThing\Validate\CommomValidate;
 
 class ConnectionTest {
     public function connect()
     {
-        $db = new DbThing();
-        $connection = $db->connect();
+        try {
+            $db = (new DbThing())->connect();
 
-        if ($connection) {
-            return [
-                'success' => true,
-            ];
+            return CommomValidate::formatResponse(
+                true,
+                StatusCodeConstants::OK,
+                'Database connection successfully',
+                $db
+            );
+        } catch (DatabaseException $e) {
+            return CommomValidate::formatResponse(
+                false,
+                $e->getCode(),
+                $e->getMessage(),
+                false
+            );
         }
-
-        return [
-            'success' => false,
-        ];
-        
     }
 }

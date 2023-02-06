@@ -5,6 +5,8 @@ namespace ScheduleThing\Database;
 use PDO;
 use PDOException;
 use Exception;
+use ScheduleThing\Constants\Http\StatusCodeConstants;
+use ScheduleThing\Exceptions\Database\DatabaseException;
 
 class DbThing {
     public string $host;
@@ -29,12 +31,7 @@ class DbThing {
 
             return $conn;
         } catch(PDOException $e) {
-            print_r([
-                'log' => 'ERROR',
-                'message' => $e->getMessage()
-            ]);
-
-            return false;
+            throw new DatabaseException("Unable to connect to database", StatusCodeConstants::SERVICE_UNAVAILABLE, $e);
         }
     }
 
