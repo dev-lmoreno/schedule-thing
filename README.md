@@ -92,8 +92,8 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                 "success": true,
                 "statusCode": 200,
                 "msg": "Data from all clients successfully selected",
-                "data": [
-                    {
+                "data": {
+                    "0": {
                         "client_id": 2,
                         "client_firstName": "Bob",
                         "client_lastName": "Johnson",
@@ -104,7 +104,7 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                         "date_created": "2023-01-30 14:44:21",
                         "date_updated": "2023-01-30 14:44:21"
                     },
-                    {
+                    "1": {
                         "client_id": 4,
                         "client_firstName": "Jane",
                         "client_lastName": "Doe",
@@ -115,7 +115,7 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                         "date_created": "2023-01-30 17:29:00",
                         "date_updated": "2023-01-30 17:29:00"
                     },
-                    {
+                    "2": {
                         "client_id": 6,
                         "client_firstName": "Bob",
                         "client_lastName": "Smith",
@@ -126,7 +126,7 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                         "date_created": "2023-01-30 17:29:15",
                         "date_updated": "2023-01-30 17:29:15"
                     },
-                    {
+                    "3": {
                         "client_id": 8,
                         "client_firstName": "Sarah",
                         "client_lastName": "Williams",
@@ -137,7 +137,7 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                         "date_created": "2023-01-30 17:29:30",
                         "date_updated": "2023-01-30 17:29:30"
                     },
-                    {
+                    "4": {
                         "client_id": 10,
                         "client_firstName": "Emma",
                         "client_lastName": "Jones",
@@ -148,7 +148,7 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                         "date_created": "2023-01-30 17:29:45",
                         "date_updated": "2023-01-30 17:29:45"
                     },
-                    {
+                    "5": {
                         "client_id": 12,
                         "client_firstName": "Michael",
                         "client_lastName": "Davis",
@@ -159,8 +159,8 @@ No decorrer do desenvolvimento será listados as bibliotecas utilizas e para que
                         "date_created": "2023-01-30 17:30:02",
                         "date_updated": "2023-01-30 17:30:02"
                     },
-                    "totalRows": 7
-                ]
+                    "totalRows": 6
+                }
             }
             ```
     * <a name="client-listOne">Listagem de um cliente específico</a>
